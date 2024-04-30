@@ -66,6 +66,7 @@ class _MyHomePageState extends State<MyHomePage> {
   TextEditingController firstName = TextEditingController();
   TextEditingController lastName = TextEditingController();
   TextEditingController resultController = TextEditingController();
+  int result_total = 0;
 
   final formKey = GlobalKey<FormState>();
   User userForm = User(firstName: "", lastName: "");
@@ -75,7 +76,9 @@ class _MyHomePageState extends State<MyHomePage> {
     if (formKey.currentState != null) {
       if (formKey.currentState!.validate()) {
         print("tout est bon");
-        resultController.value;
+        print( int.parse(num2controller.text) ?? 0);
+        print(int.parse(num1controller.text) ?? 0);
+        print(int.parse(num1controller.text) ?? 0 + int.parse(num2controller.text) ?? 0);
       }
     } else {
       print("tous les validators ne sont pas rempli");
@@ -83,10 +86,15 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   void sommeDeuxNombres() {
+    print("Bouton presser");
     setState(() {
       int sum = int.tryParse(num1controller.text) ?? 0 + int.parse(num2controller.text) ?? 0;
-      result = sum.toString();
-      print(result);
+      int num1 = int.parse(num1controller.text);
+      int num2 = int.parse(num2controller.text);
+
+      result_total = num1 + num2;
+      resultController.text = result_total.toString();
+
     });
   }
 
@@ -142,6 +150,7 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             TextFormField(
               readOnly: true,
+              controller: resultController,
             ),
           ],
         ),
@@ -160,9 +169,9 @@ class _MyHomePageState extends State<MyHomePage> {
             onPressed: () {
               if (formKey.currentState!.validate()) {
                 formKey.currentState?.reset();
-
                 num1controller.clear();
                 num2controller.clear();
+                resultController.clear();
                 firstName.clear();
                 lastName.clear();
               }
